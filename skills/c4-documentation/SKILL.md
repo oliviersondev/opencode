@@ -7,13 +7,12 @@ description: C4 model architecture visualization and documentation
 
 Create architecture documentation using the C4 model's four levels of abstraction.
 
-## MANDATORY: Documentation-First Approach
+## Approach
 
 Before creating C4 documentation:
 
-1. **Invoke `docs-management` skill** for C4 patterns
-2. **Verify C4 model syntax** via MCP servers (context7 for Structurizr/Mermaid)
-3. **Base guidance on c4model.com official documentation**
+1. **Verify C4 model syntax** via MCP servers (context7 for Structurizr/Mermaid)
+2. **Base guidance on c4model.com official documentation**
 
 ### C4 Diagram Guidelines (Minimalist)
 

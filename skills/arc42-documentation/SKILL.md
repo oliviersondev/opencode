@@ -17,13 +17,11 @@ Use this skill when:
 
 Create comprehensive architecture documentation using the arc42 template.
 
-## MANDATORY: Documentation-First Approach
+## Approach
 
 Before creating arc42 documentation:
 
-1. **Invoke `docs-management` skill** for architecture documentation patterns
-2. **Verify arc42 current version** via MCP servers (perplexity)
-3. **Base guidance on official arc42 template**
+1. **Base guidance on official arc42 template** (12 sections below)
 
 ## arc42 Template Structure
 
