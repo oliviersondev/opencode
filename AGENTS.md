@@ -60,6 +60,7 @@ Anthropic API calls are proxied through `http://127.0.0.1:3456` with `apiKey: "d
 | `aws-architect` | primary | `bash: deny`; AWS docs + `drawio` enabled, but `awslabs.aws-diagram-mcp-server` stays disabled so diagrams use the C4/draw.io workflow |
 | `editorial` | primary | `bash: deny`, `edit: ask`; read/grep/glob only by default |
 | `po` | primary | Delegates ticket output to `po-ticket` skill |
+| `prof` | primary | Pedagogical code explainer; read/grep/glob only, no edits |
 | `react-specialist` | primary | Tools limited to read/edit/grep/glob |
 | `refactor` | primary | `bash: ask`; functional changes forbidden |
 | `review` | primary | `write: false`, `edit: false` — strictly read-only |
@@ -70,4 +71,4 @@ Anthropic API calls are proxied through `http://127.0.0.1:3456` with `apiKey: "d
 |---|---|
 | `grumpydev [branch]` | Auto-diffs `current → main` (or given branch), then reviews as a grumpy senior dev |
 | `review [branch1] [branch2]` | Git diff review; one arg compares current→arg, two args compares arg1→arg2 |
-| `prof <file> [level] [fn] [question]` | Pedagogical code explainer; level must be `debutant` or `intermediaire` (exactly) |
+| `prof <file> [level] [fn] [question]` | Shortcut to the `prof` agent; level must be `debutant` or `intermediaire` |

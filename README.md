@@ -54,6 +54,7 @@ Les outils `awslabs*` et `drawio` sont désactivés globalement (`tools: false`)
 | `aws-architect` | primary | Architecture cloud AWS, diagrammes C4/draw.io |
 | `editorial` | primary | Relecture et correction de documents |
 | `po` | primary | Génération de tickets PO (User Story / Bug) pour RAS Intérim |
+| `prof` | primary | Explication pédagogique de code avec Context7 |
 | `react-specialist` | primary | Optimisation et architecture React 18+ |
 | `refactor` | primary | Refactoring code sans changement fonctionnel |
 | `review` | primary | Review code en lecture seule |
@@ -65,7 +66,7 @@ Les outils `awslabs*` et `drawio` sont désactivés globalement (`tools: false`)
 |---|---|
 | `/grumpydev [branch]` | Review diff `current → main` par un dev senior grognon |
 | `/review [branch1] [branch2]` | Diff entre branches avec analyse qualité |
-| `/prof <fichier> [niveau] [fn] [question]` | Explique du code (niveaux : `debutant`, `intermediaire`) |
+| `/prof <fichier> [niveau] [fn] [question]` | Raccourci vers l'agent `prof` |
 
 ## Skills
 
