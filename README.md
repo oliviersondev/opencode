@@ -64,8 +64,8 @@ Les outils `awslabs*` et `drawio` sont désactivés globalement (`tools: false`)
 
 | Commande | Usage |
 |---|---|
-| `/grumpydev [branch]` | Review diff `current → main` par un dev senior grognon |
-| `/review [branch1] [branch2]` | Diff entre branches avec analyse qualité |
+| `/grumpydev [branch]` | Raccourci vers l'agent `review` avec ton senior grognon |
+| `/review [branch1] [branch2]` | Raccourci vers l'agent `review` pour diff entre branches |
 | `/prof <fichier> [niveau] [fn] [question]` | Raccourci vers l'agent `prof` |
 
 ## Skills

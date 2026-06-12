@@ -63,12 +63,12 @@ Anthropic API calls are proxied through `http://127.0.0.1:3456` with `apiKey: "d
 | `prof` | primary | Pedagogical code explainer; read/grep/glob only, no edits |
 | `react-specialist` | primary | Tools limited to read/edit/grep/glob |
 | `refactor` | primary | `bash: ask`; functional changes forbidden |
-| `review` | primary | `write: false`, `edit: false` — strictly read-only |
+| `review` | primary | Read-only code review; `write: false`, `edit: false` |
 | `typescript-pro` | subagent | Invoke via Task tool; tools limited to read/edit/grep/glob |
 
 ### Commands reference
 | Command | What it does |
 |---|---|
-| `grumpydev [branch]` | Auto-diffs `current → main` (or given branch), then reviews as a grumpy senior dev |
-| `review [branch1] [branch2]` | Git diff review; one arg compares current→arg, two args compares arg1→arg2 |
+| `grumpydev [branch]` | Shortcut to the `review` agent with a grumpy senior tone |
+| `review [branch1] [branch2]` | Shortcut to the `review` agent; one arg compares current→arg, two args compares arg1→arg2 |
 | `prof <file> [level] [fn] [question]` | Shortcut to the `prof` agent; level must be `debutant` or `intermediaire` |

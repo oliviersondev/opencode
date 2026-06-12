@@ -1,17 +1,8 @@
 ---
 description: Review changes between branches
-agent: plan
+agent: review
 ---
-Review changes between branches for:
-- Code quality and best practices
-- Security vulnerabilities  
-- Performance implications
-- Breaking changes
-- Documentation updates
 
-Use context7
-
-# Branch comparison logic:
 !`bash -c '
 current_branch=$(git branch --show-current)
 target_branch="$1"
@@ -65,6 +56,12 @@ echo ""
 
 echo "Potential conflicts:"
 git merge-tree $(git merge-base "$target_branch" "$source_branch") "$target_branch" "$source_branch" 2>/dev/null | grep -E "^<<<<<|^=====>|^>>>>>" | wc -l | xargs -I {} echo "Found {} conflict markers"
+echo ""
+
+echo "Full diff:"
+git diff "$merge_base..$source_branch"
 ' "bash" "$1" "$2"`
+
+Review the provided branch diff according to the `review` agent rules.
 
 $ARGUMENTS
