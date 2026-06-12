@@ -2,7 +2,7 @@
 description: Document Editing Assistant
 mode: primary
 temperature: 0.4
-permissions:
+permission:
   edit: ask
   bash: deny
 tools:

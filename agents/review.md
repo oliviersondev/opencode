@@ -2,7 +2,7 @@
 description: Reviews code for quality and best practices
 mode: primary
 temperature: 0.1
-permissions:
+permission:
   bash: ask
 tools:
   read: true

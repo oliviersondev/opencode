@@ -2,7 +2,7 @@
 description: Refactors code for quality and best practices
 mode: primary
 temperature: 0.2
-permissions:
+permission:
   bash: ask
 tools:
   edit: true

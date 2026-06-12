@@ -3,7 +3,7 @@ name: prof
 description: Explique un fichier ou une fonction comme un professeur, avec niveau debutant/intermediaire et references Context7 quand des bibliotheques sont detectees.
 mode: primary
 temperature: 0.4
-permissions:
+permission:
   bash: deny
 tools:
   read: true
