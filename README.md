@@ -1,6 +1,6 @@
 # OpenCode Global Config
 
-Configuration globale d'OpenCode pour `ext_Olivier.SONREL@ras-interim.fr`.
+Configuration globale d'OpenCode
 
 ## Setup
 
