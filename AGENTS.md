@@ -16,7 +16,7 @@
 - Use `write` instead of echo redirection
 
 ## Task Tool (subagent_type)
-Valid values (case-insensitive): `explore`, `general`, `react-specialist`, `typescript-pro`, `build`, `plan`, `general-purpose`
+Available here: `explore`, `react-specialist`, `typescript-pro`
 
 ## Safety
 - Never commit secrets/keys to git
@@ -41,14 +41,29 @@ This directory IS the OpenCode global config — not an application project.
 | `skills/<name>/SKILL.md` | Skills; frontmatter: `name`, `description`; loaded via the `skill` tool at runtime |
 | `plugins/<name>.ts` | TypeScript plugins using `@opencode-ai/plugin` API |
 
+### Provider quirk
+Anthropic API calls are proxied through `http://127.0.0.1:3456` with `apiKey: "dummy"` (set in `opencode.json`). This is intentional — the proxy handles real authentication. Do not "fix" the dummy key or the baseURL.
+
 ### MCP / tools quirks
-- `awslabs*` tools are **globally disabled** in `opencode.json` (`"awslabs*": false`); re-enable per-agent with `tools: { "awslabs*": true }` — the `aws-architect` agent does this
+- `awslabs*` tools **and** `drawio` are **globally disabled** in `opencode.json` (`"awslabs*": false`, `"drawio": false`); re-enable per-agent via `tools:` frontmatter — `aws-architect` does both
 - `context7` MCP is always enabled
+- `CONTEXT7_API_KEY` is loaded from `.env` (gitignored); must be sourced in shell RC to work
 
 ### rtk plugin (`plugins/rtk.ts`)
 - Intercepts every bash/shell tool call and rewrites the command via `rtk rewrite` before execution
 - Silently disables itself if `rtk` is not in PATH — no error, transparent pass-through
 - All rewrite rules live in the `rtk` Rust binary (`src/discover/registry.rs`); do **not** add logic to `rtk.ts`
+
+### Agents
+| Agent | Mode | Key constraints |
+|---|---|---|
+| `aws-architect` | primary | `bash: deny`; AWS docs + `drawio` enabled, but `awslabs.aws-diagram-mcp-server` stays disabled so diagrams use the C4/draw.io workflow |
+| `editorial` | primary | `bash: deny`, `edit: ask`; read/grep/glob only by default |
+| `po` | primary | Delegates ticket output to `po-ticket` skill |
+| `react-specialist` | primary | Tools limited to read/edit/grep/glob |
+| `refactor` | primary | `bash: ask`; functional changes forbidden |
+| `review` | primary | `write: false`, `edit: false` — strictly read-only |
+| `typescript-pro` | subagent | Invoke via Task tool; tools limited to read/edit/grep/glob |
 
 ### Commands reference
 | Command | What it does |
