@@ -1,74 +1,40 @@
-# Global OpenCode Rules
+# OpenCode Config Notes
 
-## Documentation
-- Always use **Context7** for documentation searches (call `context7_resolve-library-id` first, then `context7_query-docs`)
-- Only fall back to websearch/webfetch if Context7 doesn't have the answer
+## Repo Scope
+- This repository is the global OpenCode config at `~/.config/opencode`, not an application project.
+- `opencode.json` is the active runtime config and source of truth; treat `opencode.jsonc` as secondary/reference unless explicitly asked.
+- `package.json` only declares `@opencode-ai/plugin`; there are no repo-local lint, typecheck, test, or build scripts.
 
-## Code Quality
-- Before completing any task in a code project: run linters/typecheckers (check `package.json` scripts)
-- Follow existing code conventions in the project
+## Documentation Lookups
+- Use Context7 first for external documentation: resolve the library ID, then query docs.
+- Fall back to web fetch/search only when Context7 cannot answer.
 
-## Tool Usage
-- Use `grep` instead of bash grep
-- Use `glob` instead of bash find
-- Use `read` instead of bash cat/head/tail
-- Use `edit` instead of bash sed/awk
-- Use `write` instead of echo redirection
+## OpenCode Files
+- Agent definitions live in `agents/*.md`; use frontmatter `permission` (singular), not `permissions`.
+- Commands live in `commands/*.md`; they may use `agent:`, `$ARGUMENTS`, `$1...$N`, and `!` shell-output blocks.
+- Skills live in `skills/<name>/SKILL.md` and are loaded on demand through the `skill` tool.
+- Plugins live in `plugins/*.ts`; active plugins are determined by OpenCode/runtime config, not by file presence alone.
 
-## Task Tool (subagent_type)
-Available here: `explore`, `react-specialist`, `typescript-pro`
+## MCP And Providers
+- `context7` is enabled in `opencode.json`; `CONTEXT7_API_KEY` is loaded from `.env`, which is gitignored.
+- Anthropic is proxied through `http://127.0.0.1:3456` with `apiKey: "dummy"`; this is intentional and must not be changed.
+- `awslabs*` and `drawio` are globally disabled in `opencode.json` tools and must be re-enabled per agent.
+- `aws-architect` enables `drawio` and `awslabs*`, but explicitly disables `awslabs.aws-diagram-mcp-server`.
 
-## Safety
-- Never commit secrets/keys to git
-- Always verify destructive commands before execution
+## RTK Bash Rewriting
+- Bash/shell tool calls are rewritten through `rtk rewrite` in this environment.
+- `plugins/rtk.ts` is intentionally thin: do not add rewrite rules there; update the external `rtk` registry instead.
+- If `rtk` is absent from `PATH`, the plugin path silently passes commands through unchanged.
 
----
+## Known Gotchas
+- Do not add or restore references to a `docs-management` skill; it is not present in this config.
+- Do not assume Perplexity MCP is available; it is not configured here.
+- The `drawio` skill still contains AWS diagram-server guidance, but the AWS diagram MCP is disabled for `aws-architect`.
+- `opencode.jsonc` lacks `context7`, the Anthropic proxy, and plugin settings from `opencode.json`; do not copy from it blindly.
 
-## Working in this config directory (`~/.config/opencode/`)
-
-This directory IS the OpenCode global config — not an application project.
-
-### Config files
-- `opencode.json` — **active config** loaded by OpenCode; source of truth for MCP servers, provider, tools, plugins
-- `opencode.jsonc` — secondary config (TUI/alternate); a `.bak` file marks a past migration
-- No build/test scripts: `package.json` contains only the `@opencode-ai/plugin` dependency
-
-### Directory layout
-| Path | Purpose |
-|---|---|
-| `agents/<name>.md` | Agent definitions; frontmatter: `name`, `description`, `mode` (primary\|subagent), optional `permissions` and `tools` |
-| `commands/<name>.md` | Slash commands; positional args `$1…$N`; `!` prefix runs bash at invocation; `agent:` sets agent type |
-| `skills/<name>/SKILL.md` | Skills; frontmatter: `name`, `description`; loaded via the `skill` tool at runtime |
-| `plugins/<name>.ts` | TypeScript plugins using `@opencode-ai/plugin` API |
-
-### Provider quirk
-Anthropic API calls are proxied through `http://127.0.0.1:3456` with `apiKey: "dummy"` (set in `opencode.json`). This is intentional — the proxy handles real authentication. Do not "fix" the dummy key or the baseURL.
-
-### MCP / tools quirks
-- `awslabs*` tools **and** `drawio` are **globally disabled** in `opencode.json` (`"awslabs*": false`, `"drawio": false`); re-enable per-agent via `tools:` frontmatter — `aws-architect` does both
-- `context7` MCP is always enabled
-- `CONTEXT7_API_KEY` is loaded from `.env` (gitignored); must be sourced in shell RC to work
-
-### rtk plugin (`plugins/rtk.ts`)
-- Intercepts every bash/shell tool call and rewrites the command via `rtk rewrite` before execution
-- Silently disables itself if `rtk` is not in PATH — no error, transparent pass-through
-- All rewrite rules live in the `rtk` Rust binary (`src/discover/registry.rs`); do **not** add logic to `rtk.ts`
-
-### Agents
-| Agent | Mode | Key constraints |
-|---|---|---|
-| `aws-architect` | primary | `bash: deny`; AWS docs + `drawio` enabled, but `awslabs.aws-diagram-mcp-server` stays disabled so diagrams use the C4/draw.io workflow |
-| `editorial` | primary | `bash: deny`, `edit: ask`; read/grep/glob only by default |
-| `po` | primary | Delegates ticket output to `po-ticket` skill |
-| `prof` | primary | Pedagogical code explainer; read/grep/glob only, no edits |
-| `react-specialist` | primary | Tools limited to read/edit/grep/glob |
-| `refactor` | primary | `bash: ask`; functional changes forbidden |
-| `review` | primary | Read-only code review; `write: false`, `edit: false` |
-| `typescript-pro` | subagent | Invoke via Task tool; tools limited to read/edit/grep/glob |
-
-### Commands reference
-| Command | What it does |
-|---|---|
-| `grumpydev [branch]` | Shortcut to the `review` agent with a grumpy senior tone |
-| `review [branch1] [branch2]` | Shortcut to the `review` agent; one arg compares current→arg, two args compares arg1→arg2 |
-| `prof <file> [level] [fn] [question]` | Shortcut to the `prof` agent; level must be `debutant` or `intermediaire` |
+## Useful Entry Points
+- `/review [branch1] [branch2]` uses the `review` agent and injects a git diff.
+- `/grumpydev [branch]` uses the `review` agent with a grumpy review prompt.
+- `/prof <file> [level] [fn] [question]` uses the `prof` agent; valid levels are `debutant` and `intermediaire`.
+- `po` delegates final ticket formatting to the `po-ticket` skill.
+- Architecture documentation skills available on demand: `arc42-documentation`, `c4-documentation`, `architecture-decision-records-adr`, `drawio`.
