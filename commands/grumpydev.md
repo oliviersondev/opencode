@@ -1,5 +1,5 @@
 ---
-description: Grumpy senior developer reviews your AI-generated code
+description: Grumpy senior developer reviews your AI-generated code ( nickname: Gaetan )
 agent: review
 ---
 !`bash -c '
