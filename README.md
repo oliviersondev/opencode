@@ -66,7 +66,6 @@ Les outils `awslabs*` et `drawio` sont désactivés globalement (`tools: false`)
 | `/grumpydev [branch]` | Review diff `current → main` par un dev senior grognon |
 | `/review [branch1] [branch2]` | Diff entre branches avec analyse qualité |
 | `/prof <fichier> [niveau] [fn] [question]` | Explique du code (niveaux : `debutant`, `intermediaire`) |
-| `/po` | Génère un ticket PO RAS Intérim (User Story ou Bug) |
 
 ## Skills
 
@@ -76,7 +75,7 @@ Les outils `awslabs*` et `drawio` sont désactivés globalement (`tools: false`)
 | `architecture-decision-records-adr` | Via `skill` tool |
 | `c4-documentation` | Via `skill` tool |
 | `drawio` | Via `skill` tool |
-| `po-ticket` | Via `skill` tool (utilisé par agent `po` et commande `/po`) |
+| `po-ticket` | Via `skill` tool (utilisé par agent `po`) |
 
 ## Plugin — rtk
 

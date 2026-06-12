@@ -71,4 +71,3 @@ Anthropic API calls are proxied through `http://127.0.0.1:3456` with `apiKey: "d
 | `grumpydev [branch]` | Auto-diffs `current → main` (or given branch), then reviews as a grumpy senior dev |
 | `review [branch1] [branch2]` | Git diff review; one arg compares current→arg, two args compares arg1→arg2 |
 | `prof <file> [level] [fn] [question]` | Pedagogical code explainer; level must be `debutant` or `intermediaire` (exactly) |
-| `po` | Generates a RAS Intérim PO ticket (User Story or Bug) in French via the `po-ticket` skill |
