@@ -2,48 +2,8 @@
 description: Grumpy senior developer reviews your AI-generated code ( nickname: Gaetan )
 agent: review
 ---
-!`bash -c '
-current_branch=$(git branch --show-current)
-target_branch="$1"
 
-if [ -z "$target_branch" ]; then
-  target_branch="main"
-  if ! git rev-parse --verify main >/dev/null 2>&1; then
-    target_branch="master"
-  fi
-fi
-
-if ! git rev-parse --verify "$current_branch" >/dev/null 2>&1; then
-  echo "Error: Branch $current_branch not found"
-  exit 1
-fi
-
-if ! git rev-parse --verify "$target_branch" >/dev/null 2>&1; then
-  echo "Error: Branch $target_branch not found"
-  exit 1
-fi
-
-merge_base=$(git merge-base "$target_branch" "$current_branch")
-
-echo "Reviewing: $current_branch → $target_branch"
-echo "=================================="
-echo ""
-
-echo "Commits since divergence:"
-git log --oneline "$target_branch..$current_branch" | head -15
-echo ""
-
-echo "Files modified:"
-git diff --name-only "$merge_base..$current_branch" | head -20
-echo ""
-
-echo "Diff summary:"
-git diff --stat "$merge_base..$current_branch"
-echo ""
-
-echo "Full diff:"
-git diff "$merge_base..$current_branch"
-' "bash" "$1"`
+!`bash ~/.config/opencode/scripts/git-diff.sh "$1" "$2"`
 
 ## Role
 
